@@ -23,8 +23,8 @@ export class KeyboardComponent implements OnInit {
     return keyStateStyles[this.guessService.keyboardLetterState[key]];
   }
 
-  onClick(e: Event) {
-    const { textContent, innerHTML } = e.currentTarget as HTMLButtonElement;
+  onClick(event: Event) {
+    const { textContent, innerHTML } = event.currentTarget as HTMLButtonElement;
     let returnProps = textContent!;
     if (textContent !== innerHTML) {
       returnProps = 'Backspace';

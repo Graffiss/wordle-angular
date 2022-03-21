@@ -12,6 +12,7 @@ export class AddGuessService {
       letter.length === 1 && this.guess.length !== WORD_LENGTH
         ? this.guess + letter
         : this.guess;
+    console.log('guess:', this.guess);
 
     switch (letter) {
       case 'Backspace':

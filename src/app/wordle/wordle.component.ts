@@ -31,9 +31,7 @@ export class WordleComponent implements OnInit {
     return rows;
   }
 
-  addGuessLetter(key: string) {
-    this.addGuessService.addGuessLetter(key);
-  }
+  keyProps = (key: string) => this.addGuessService.addGuessLetter(key);
 
   ngOnInit(): void {
     this.words = this.getWords();
