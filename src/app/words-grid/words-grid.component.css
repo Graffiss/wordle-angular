@@ -1,0 +1,8 @@
+.letter-wrapper {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  flex-grow: 1;
+  grid-template-columns: repeat(5, 4em);
+  gap: 0.25em;
+}
