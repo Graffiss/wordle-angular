@@ -1,0 +1,8 @@
+<app-alert *ngIf="isGameOver"></app-alert>
+<div class="tiles-wrapper">
+  <app-words-grid
+    *ngFor="let word of words"
+    [word]="word.guess"
+  ></app-words-grid>
+</div>
+<app-keyboard></app-keyboard>

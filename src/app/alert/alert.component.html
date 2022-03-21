@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <h2>Game Over</h2>
+  <p *ngIf="gameWon; else elseBlock">Congrats! You won!</p>
+  <ng-template #elseBlock>
+    <div class="answer">
+      <app-words-grid [word]="answer"></app-words-grid>
+    </div>
+  </ng-template>
+  <button>New Game</button>
+</div>
