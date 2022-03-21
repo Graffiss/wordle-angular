@@ -1,6 +1,10 @@
 <div class="keyboard-wrapper">
-  <button *ngFor="let key of keyboardLetters">
+  <button
+    *ngFor="let key of keyboardLetters"
+    type="button"
+    (click)="onClick(e)"
+  >
     {{ key }}
   </button>
-  <button>Delete</button>
+  <button type="button" (click)="onClick(e)">Delete</button>
 </div>

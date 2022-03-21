@@ -3,6 +3,7 @@
   <app-words-grid
     *ngFor="let word of words"
     [word]="word.guess"
+    [result]="word.result"
   ></app-words-grid>
 </div>
-<app-keyboard></app-keyboard>
+<app-keyboard [onClickProps]="(key) => addGuessLetter(key)"></app-keyboard>
