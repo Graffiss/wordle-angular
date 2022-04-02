@@ -27,13 +27,14 @@ interface GuessState {
   providedIn: 'root',
 })
 export class GuessService {
-  answer: string = getWord();
-  rows: GuessRow[] = [];
-  gameState: 'playing' | 'won' | 'lost' = 'playing';
-  keyboardLetterState: { [letter: string]: LetterState } = {};
+  public answer: string = getWord();
+  public rows: GuessRow[] = [];
+  public gameState: 'playing' | 'won' | 'lost' = 'playing';
+  public keyboardLetterState: { [letter: string]: LetterState } = {};
 
   addGuess(guess: string) {
     const result = calculateGuess(guess, this.answer);
+    console.log('Result:', result);
 
     const rows = this.rows.concat({
       guess,
@@ -61,6 +62,7 @@ export class GuessService {
           break;
       }
     });
+    console.log('Answer:', this.answer);
 
     this.rows = rows;
     this.keyboardLetterState = keyboardLetterState;

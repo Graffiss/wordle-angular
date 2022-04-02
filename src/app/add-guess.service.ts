@@ -5,17 +5,16 @@ import { WORD_LENGTH } from './constants';
   providedIn: 'root',
 })
 export class AddGuessService {
-  guess = '';
+  public guess: string = '';
 
   addGuessLetter(letter: string) {
     const newGuess =
       letter.length === 1 && this.guess.length !== WORD_LENGTH
         ? this.guess + letter
         : this.guess;
-    console.log('guess:', this.guess);
 
     switch (letter) {
-      case 'Backspace':
+      case 'Delete':
         return (this.guess = newGuess.slice(0, -1));
       case 'Enter':
         if (newGuess.length === WORD_LENGTH) {
@@ -27,6 +26,9 @@ export class AddGuessService {
       this.guess = newGuess;
       return this.guess;
     }
+
+    console.log('Guess:', this.guess);
+    console.log('New guess:', newGuess);
 
     return (this.guess = newGuess);
   }
