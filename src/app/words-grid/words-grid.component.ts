@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  SimpleChanges,
-  OnChanges,
-} from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { WORD_LENGTH } from '../constants';
 import { LetterState } from '../guess.service';
 
@@ -23,13 +17,9 @@ export class WordsGridComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    const wordCurrentValue = changes?.['word']?.currentValue;
-    console.log('Word current value:', wordCurrentValue);
+  ngOnChanges() {
     const lettersRemaining = WORD_LENGTH - this.word.length;
 
     this.letters = this.word.split('').concat(Array(lettersRemaining).fill(''));
-
-    console.log('Changes in Words Grid:', changes);
   }
 }

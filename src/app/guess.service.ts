@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { calculateGuess } from 'src/utils/calculate-guess';
 import { getWord } from 'src/utils/get-words';
 import { NUMBER_OF_GUESSES } from './constants';
@@ -28,9 +29,17 @@ interface GuessState {
 })
 export class GuessService {
   public answer: string = getWord();
-  public rows: GuessRow[] = [];
   public gameState: 'playing' | 'won' | 'lost' = 'playing';
   public keyboardLetterState: { [letter: string]: LetterState } = {};
+  public rows: GuessRow[] = [];
+
+  public rows$: Observable<GuessRow[]>;
+  private rowsSubject: Subject<GuessRow[]>;
+
+  constructor() {
+    this.rowsSubject = new Subject<GuessRow[]>();
+    this.rows$ = this.rowsSubject.asObservable();
+  }
 
   addGuess(guess: string) {
     const result = calculateGuess(guess, this.answer);
@@ -80,6 +89,4 @@ export class GuessService {
     this.keyboardLetterState = {};
     initialRows.forEach(this.addGuess);
   }
-
-  constructor() {}
 }

@@ -6,4 +6,4 @@
     [result]="word.result"
   ></app-words-grid>
 </div>
-<app-keyboard [onClickProps]="keyProps"></app-keyboard>
+<app-keyboard (keyPressed)="addGuessLetter($event)"></app-keyboard>

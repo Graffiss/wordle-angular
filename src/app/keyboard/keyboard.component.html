@@ -2,9 +2,9 @@
   <button
     *ngFor="let key of keyboardLetters"
     type="button"
-    (click)="onClick($event)"
+    (click)="onClick(key)"
   >
     {{ key }}
   </button>
-  <button type="button" (click)="onClick($event)">Delete</button>
+  <button type="button" (click)="onClick('Backspace')">Delete</button>
 </div>

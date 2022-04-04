@@ -1,6 +1,5 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AddGuessService } from '../add-guess.service';
-import { NUMBER_OF_GUESSES } from '../constants';
 import { GuessRow, GuessService } from '../guess.service';
 
 @Component({
@@ -8,9 +7,20 @@ import { GuessRow, GuessService } from '../guess.service';
   templateUrl: './wordle.component.html',
   styleUrls: ['./wordle.component.css'],
 })
-export class WordleComponent implements OnInit, OnChanges {
-  // words = words;
-  public words: GuessRow[] = [];
+export class WordleComponent implements OnInit {
+  @HostListener('window:keydown', ['$event']) spaceEvent(event: KeyboardEvent) {
+    this.addGuessLetter(event.key);
+  }
+  // public guess: string = '';
+  public rows: GuessRow[] = [];
+
+  get guess(): string {
+    return this.addGuessService.guess;
+  }
+
+  get words(): GuessRow[] {
+    return this.addGuessService.words;
+  }
 
   isGameOver = this.guessService.gameState !== 'playing';
 
@@ -19,56 +29,18 @@ export class WordleComponent implements OnInit, OnChanges {
     public addGuessService: AddGuessService
   ) {}
 
-  keyProps = (key: string) => {
-    console.log('Clicked key:', key);
-    return this.addGuessService.addGuessLetter(key.replace(/\s/g, ''));
-  };
-
-  ngOnInit(): void {
-    let rows = [...this.guessService.rows];
-    console.log('Guess:', this.addGuessService.guess);
-
-    let currentRow = 0;
-    if (rows.length < NUMBER_OF_GUESSES) {
-      currentRow =
-        rows.push({ guess: this.addGuessService.guess, result: [] }) - 1;
-      console.log('Current row:', currentRow);
-    }
-    const guessesRemaining = NUMBER_OF_GUESSES - rows.length;
-    rows = rows.concat(
-      Array(guessesRemaining).fill({
-        guess: '',
-        result: [],
-      })
-    );
-    console.log('Rows:', rows);
-
-    this.words = rows;
+  get currentGuess() {
+    console.log('Current guess:', this.addGuessService.guess);
+    return this.addGuessService.guess;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes?.['words']?.currentValue &&
-      changes?.['words'].currentValue !== changes?.['words'].previousValue
-    ) {
-      let rows = [...this.guessService.rows];
-      console.log('Rows:', rows);
-      console.log('Guess:', this.addGuessService.guess);
+  addGuessLetter(letter: string) {
+    console.log('Words from service:', this.addGuessService.words);
+    this.addGuessService.addGuessLetter(letter);
+    this.addGuessService.setWords();
+  }
 
-      let currentRow = 0;
-      if (rows.length < NUMBER_OF_GUESSES) {
-        currentRow =
-          rows.push({ guess: this.addGuessService.guess, result: [] }) - 1;
-        console.log('Current row:', currentRow);
-      }
-      const guessesRemaining = NUMBER_OF_GUESSES - rows.length;
-      rows = rows.concat(
-        Array(guessesRemaining).fill({
-          guess: '',
-          result: [],
-        })
-      );
-      this.words = rows;
-    }
+  ngOnInit(): void {
+    this.addGuessService.setWords();
   }
 }
