@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { LetterState } from '../add-guess.service';
 
 const characterStateStyles = {
@@ -11,14 +11,18 @@ const characterStateStyles = {
   templateUrl: './letter-tile.component.html',
   styleUrls: ['./letter-tile.component.css'],
 })
-export class LetterTileComponent implements OnInit {
+export class LetterTileComponent implements OnInit, OnChanges {
   @Input() value!: string;
   @Input() state: LetterState | null = null;
 
-  stateStyles =
-    this.state == null ? '#121213' : `${characterStateStyles[this.state]}`;
+  stateStyles: string = '#121213';
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  ngOnChanges() {
+    this.stateStyles =
+      this.state == null ? '#121213' : `${characterStateStyles[this.state]}`;
+  }
 }

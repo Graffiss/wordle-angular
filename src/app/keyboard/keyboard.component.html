@@ -2,9 +2,13 @@
   <button
     *ngFor="let key of keyboardLetters"
     type="button"
+    [style.background-color]="keyStyle(key)"
     (click)="onClick(key)"
+    [ngClass]="{ large: key === 'Enter', invisible: key === '' }"
   >
     {{ key }}
   </button>
-  <button type="button" (click)="onClick('Backspace')">Delete</button>
+  <button type="button" class="large" (click)="onClick('Backspace')">
+    Delete
+  </button>
 </div>
