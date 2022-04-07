@@ -1,6 +1,7 @@
 <div class="letter-wrapper">
   <app-letter-tile
-    *ngFor="let letter of letters"
+    *ngFor="let letter of letters; index as i"
     [value]="letter"
+    [state]="result![i]"
   ></app-letter-tile>
 </div>

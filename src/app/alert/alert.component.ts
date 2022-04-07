@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AddGuessService } from '../add-guess.service';
 
 @Component({
   selector: 'app-alert',
@@ -6,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./alert.component.css'],
 })
 export class AlertComponent implements OnInit {
-  gameWon = false;
-  answer = 'story';
-  constructor() {}
+  gameWon = this.addGuessService.gameState === 'won';
+  answer = this.addGuessService.answer;
+  constructor(public addGuessService: AddGuessService) {}
+
+  newGame() {
+    this.addGuessService.newGame([]);
+  }
 
   ngOnInit(): void {}
 }
