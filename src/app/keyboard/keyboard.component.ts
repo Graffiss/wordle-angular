@@ -1,7 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AddGuessService } from '../add-guess.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { AddGuessService, LetterState } from '../add-guess.service';
 import { KEYBOARD_LETTERS } from '../constants';
-import { LetterState } from '../add-guess.service';
 
 const keyStateStyles = {
   [LetterState.Miss]: '#3a3a3c',
@@ -14,11 +20,12 @@ const keyStateStyles = {
   templateUrl: './keyboard.component.html',
   styleUrls: ['./keyboard.component.css'],
 })
-export class KeyboardComponent implements OnInit {
+export class KeyboardComponent implements OnInit, OnChanges {
   @Input() onClickProps!: (key: string) => void;
   @Output() keyPressed = new EventEmitter<string>();
 
   keyboardLetters: string[] = [];
+  keyStyles: string[] = [''];
 
   constructor(private addGuessService: AddGuessService) {
     this.keyboardLetters = KEYBOARD_LETTERS.map((key) => key);
@@ -33,4 +40,8 @@ export class KeyboardComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  ngOnChanges() {
+    this.keyStyles = KEYBOARD_LETTERS.map((key) => this.keyStyle(key));
+  }
 }
