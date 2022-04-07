@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { WORD_LENGTH } from '../constants';
-import { LetterState } from '../guess.service';
+import { LetterState } from '../add-guess.service';
 
 @Component({
   selector: 'app-words-grid',

@@ -1,4 +1,4 @@
-import { LetterState } from 'src/app/guess.service';
+import { LetterState } from 'src/app/add-guess.service';
 
 export const calculateGuess = (
   guess: string,

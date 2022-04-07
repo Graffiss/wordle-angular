@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AddGuessService } from '../add-guess.service';
 import { KEYBOARD_LETTERS } from '../constants';
-import { GuessService, LetterState } from '../guess.service';
+import { LetterState } from '../add-guess.service';
 
 const keyStateStyles = {
   [LetterState.Miss]: '#3a3a3c',
@@ -19,12 +20,12 @@ export class KeyboardComponent implements OnInit {
 
   keyboardLetters: string[] = [];
 
-  constructor(private guessService: GuessService) {
+  constructor(private addGuessService: AddGuessService) {
     this.keyboardLetters = KEYBOARD_LETTERS.map((key) => key);
   }
 
   keyStyle(key: string) {
-    return keyStateStyles[this.guessService.keyboardLetterState[key]];
+    return keyStateStyles[this.addGuessService.keyboardLetterState[key]];
   }
 
   onClick(key: string): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GuessService } from '../guess.service';
+import { AddGuessService } from '../add-guess.service';
 
 @Component({
   selector: 'app-alert',
@@ -7,12 +7,12 @@ import { GuessService } from '../guess.service';
   styleUrls: ['./alert.component.css'],
 })
 export class AlertComponent implements OnInit {
-  gameWon = this.guessService.gameState === 'won';
-  answer = this.guessService.answer;
-  constructor(public guessService: GuessService) {}
+  gameWon = this.addGuessService.gameState === 'won';
+  answer = this.addGuessService.answer;
+  constructor(public addGuessService: AddGuessService) {}
 
   newGame() {
-    this.guessService.newGame([]);
+    this.addGuessService.newGame([]);
   }
 
   ngOnInit(): void {}

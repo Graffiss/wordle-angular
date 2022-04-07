@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LetterState } from '../guess.service';
+import { LetterState } from '../add-guess.service';
 
 const characterStateStyles = {
   [LetterState.Miss]: '#3a3a3c',

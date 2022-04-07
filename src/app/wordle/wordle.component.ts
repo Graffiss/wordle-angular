@@ -1,6 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { pairwise, startWith } from 'rxjs';
+import { isValidWord } from 'src/utils/get-words';
 import { AddGuessService } from '../add-guess.service';
-import { GuessRow, GuessService } from '../guess.service';
+import { WORD_LENGTH } from '../constants';
+import { GuessRow } from '../add-guess.service';
 
 @Component({
   selector: 'app-wordle',
@@ -11,31 +14,51 @@ export class WordleComponent implements OnInit {
   @HostListener('window:keydown', ['$event']) spaceEvent(event: KeyboardEvent) {
     this.addGuessLetter(event.key);
   }
-  // public guess: string = '';
   public rows: GuessRow[] = [];
+  public previous: string = '';
 
-  get guess(): string {
+  @Input() get guess(): string {
     return this.addGuessService.guess;
+  }
+
+  set guess(value) {
+    this.addGuessService.guess = value;
   }
 
   get words(): GuessRow[] {
     return this.addGuessService.words;
   }
 
-  isGameOver = this.guessService.gameState !== 'playing';
+  get isGameOver() {
+    return this.addGuessService.gameState !== 'playing';
+  }
 
-  constructor(
-    public guessService: GuessService,
-    public addGuessService: AddGuessService
-  ) {}
+  constructor(public addGuessService: AddGuessService) {}
 
   get currentGuess() {
-    console.log('Current guess:', this.addGuessService.guess);
     return this.addGuessService.guess;
   }
 
+  get previousGuess() {
+    return this.addGuessService.previousGuess$
+      .pipe(startWith(this.guess), pairwise())
+      .subscribe(([previous, current]) => {
+        this.previous = previous;
+        this.guess = current;
+        if (this.guess.length === 0 && previous.length === WORD_LENGTH) {
+          if (isValidWord(previous)) {
+            this.addGuessService.addGuess(previous);
+          } else {
+            this.addGuessService.guess = previous;
+          }
+        }
+      });
+  }
+
   addGuessLetter(letter: string) {
-    console.log('Words from service:', this.addGuessService.words);
+    if (letter === 'Enter') {
+      this.previousGuess;
+    }
     this.addGuessService.addGuessLetter(letter);
     this.addGuessService.setWords();
   }
